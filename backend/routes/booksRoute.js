@@ -12,7 +12,8 @@ const bookSchema = z.object({
 
 //Creates a book into the database
 router.post('/',async(req,res)=> {
-    try {        //Zod validation
+    try {        
+        //Zod validation
         const validatedData = bookSchema.parse(req.body);
         const { title, author, publishYear } = validatedData;
 
@@ -26,13 +27,14 @@ router.post('/',async(req,res)=> {
         }
         const book = await Book.create(newBook);
 
-        return res.send({
-           message : book
+        return res.json({
+           message : "Created successfully",
+           book
           }
         )
     } 
     catch(e) {
-        return res.send({
+        return res.json({
             message : "ERror"
         })
     }

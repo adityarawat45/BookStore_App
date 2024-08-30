@@ -17,7 +17,7 @@ const CreateBooks = () => {
     const data = {
       title,
       author,
-      publishYear,
+      publishYear: parseInt(publishYear, 10),
     };
     setLoading(true);
     axios
@@ -29,9 +29,8 @@ const CreateBooks = () => {
       })
       .catch((error) => {
         setLoading(false);
-        // alert('An error happened. Please Chack console');
-        enqueueSnackbar('Error', { variant: 'error' });
-        console.log(error);
+        enqueueSnackbar(`Error: ${error.response?.data?.message || 'An error occurred'}`, { variant: 'error' });
+        console.log('Error details:', error);
       });
   };
 
@@ -39,7 +38,7 @@ const CreateBooks = () => {
     <div className='p-4'>
       <BackButton />
       <h1 className='text-3xl my-4'>Create Book</h1>
-      {loading ? <Spinner /> : ''}
+      {loading && <Spinner />}
       <div className='flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto'>
         <div className='my-4'>
           <label className='text-xl mr-4 text-gray-500'>Title</label>
@@ -74,6 +73,6 @@ const CreateBooks = () => {
       </div>
     </div>
   );
-}
+};
 
-export default CreateBooks
+export default CreateBooks;
